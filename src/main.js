@@ -186,6 +186,11 @@ function createMenu() {
       label: '编辑',
       submenu: [
         { role: 'copy' },
+        {
+          label: '查找',
+          accelerator: 'CommandOrControl+F',
+          click: () => mainWindow?.webContents.send('search-focus')
+        },
         { role: 'selectAll' }
       ]
     },
@@ -213,7 +218,7 @@ function createWindow() {
     height: 820,
     minWidth: 760,
     minHeight: 560,
-    titleBarStyle: 'hiddenInset',
+    title: '云梦Markdown',
     backgroundColor: getResolvedTheme() === 'dark' ? '#0d1117' : '#ffffff',
     webPreferences: {
       preload: path.join(__dirname, 'preload.cjs'),
@@ -279,3 +284,18 @@ ipcMain.handle('file:openPath', async (_event, filePath) => {
   await loadFileIntoWindow(filePath);
 });
 ipcMain.handle('theme:get', () => getThemePayload());
+ipcMain.handle('search:find', (event, query, options = {}) => {
+  const webContents = event.sender;
+  if (!query) {
+    webContents.stopFindInPage('clearSelection');
+    return;
+  }
+
+  webContents.findInPage(query, {
+    forward: options.forward !== false,
+    findNext: Boolean(options.findNext)
+  });
+});
+ipcMain.handle('search:clear', (event) => {
+  event.sender.stopFindInPage('clearSelection');
+});

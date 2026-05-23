@@ -7,6 +7,7 @@ const dropZone = document.querySelector('#dropZone');
 const highlightTheme = document.querySelector('#highlightTheme');
 const emptyState = document.querySelector('#emptyState');
 const openButton = document.querySelector('#openButton');
+const searchInput = document.querySelector('#searchInput');
 let currentDirectory = null;
 let currentDirectoryUrl = null;
 
@@ -70,6 +71,32 @@ openButton.addEventListener('click', () => {
   window.xpmd.openMarkdown();
 });
 
+searchInput.addEventListener('input', () => {
+  const query = searchInput.value.trim();
+  if (!query) {
+    window.xpmd.clearSearch();
+    return;
+  }
+
+  window.xpmd.findText(query, { findNext: false, forward: true });
+});
+
+searchInput.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    event.preventDefault();
+    const query = searchInput.value.trim();
+    if (query) {
+      window.xpmd.findText(query, { findNext: true, forward: !event.shiftKey });
+    }
+  }
+
+  if (event.key === 'Escape') {
+    searchInput.value = '';
+    searchInput.blur();
+    window.xpmd.clearSearch();
+  }
+});
+
 dropZone.addEventListener('dragover', (event) => {
   event.preventDefault();
   dropZone.classList.add('is-dragging');
@@ -100,6 +127,10 @@ window.xpmd.onMarkdownOpened(setFile);
 window.xpmd.onMarkdownUpdated(setFile);
 window.xpmd.onMarkdownError(showError);
 window.xpmd.onThemeChanged(applyTheme);
+window.xpmd.onSearchFocus(() => {
+  searchInput.focus();
+  searchInput.select();
+});
 
 renderMarkdown(initialMarkdown);
 
