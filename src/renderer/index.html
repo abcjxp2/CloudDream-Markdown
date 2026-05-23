@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>XPMD</title>
+    <link rel="stylesheet" href="./vendor/highlight/github.min.css" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">M</div>
+          <div>
+            <h1>XPMD</h1>
+            <p>Markdown Viewer</p>
+          </div>
+        </div>
+
+        <button class="primary-button" id="openButton" type="button">
+          <i data-lucide="folder-open"></i>
+          <span>打开文件</span>
+        </button>
+
+        <div class="file-card" id="fileCard">
+          <p class="meta-label">当前文件</p>
+          <p class="file-name" id="fileName">未选择</p>
+          <p class="file-path" id="filePath">拖入 .md 文件或按 Command+O</p>
+        </div>
+
+        <div class="tips">
+          <div class="tip"><i data-lucide="panel-top-open"></i><span>支持标题、表格、代码块</span></div>
+          <div class="tip"><i data-lucide="refresh-cw"></i><span>文件保存后自动刷新</span></div>
+          <div class="tip"><i data-lucide="mouse-pointer-click"></i><span>外链会用浏览器打开</span></div>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <div class="drop-zone" id="dropZone">
+          <div class="preview-wrap">
+            <article class="markdown-body" id="preview"></article>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="./vendor/lucide/lucide.js"></script>
+    <script type="module" src="./renderer.js"></script>
+  </body>
+</html>

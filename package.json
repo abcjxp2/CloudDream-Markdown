@@ -1,0 +1,19 @@
+{
+  "name": "xpmd",
+  "version": "0.1.0",
+  "description": "A focused macOS Markdown viewer.",
+  "main": "src/main.js",
+  "type": "module",
+  "scripts": {
+    "prepare:vendor": "node scripts/sync-vendor.js",
+    "start": "npm run prepare:vendor && electron .",
+    "package": "npm run prepare:vendor && node scripts/package-mac.js"
+  },
+  "dependencies": {
+    "@highlightjs/cdn-assets": "^11.11.1",
+    "dompurify": "^3.2.3",
+    "electron": "^35.0.0",
+    "lucide": "^1.16.0",
+    "marked": "^15.0.7"
+  }
+}
