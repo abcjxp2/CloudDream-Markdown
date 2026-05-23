@@ -81,6 +81,38 @@ body {
   color: var(--muted);
 }
 
+.edit-bar {
+  position: fixed;
+  top: 14px;
+  left: 18px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 30px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.edit-bar[hidden] {
+  display: none;
+}
+
+.edit-bar button {
+  height: 28px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.edit-bar button:hover {
+  background: var(--code-bg);
+}
+
 .empty-state {
   position: fixed;
   inset: 0;
@@ -122,6 +154,46 @@ body {
   font-size: 15px;
   line-height: 1.62;
   overflow-wrap: break-word;
+}
+
+.editor-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.9fr) minmax(360px, 1.1fr);
+  gap: 24px;
+  width: min(1180px, 100%);
+  min-height: calc(100vh - 126px);
+  margin: 0 auto;
+}
+
+.editor-layout[hidden] {
+  display: none;
+}
+
+#editorInput {
+  width: 100%;
+  min-height: calc(100vh - 126px);
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  outline: 0;
+  resize: none;
+  background: var(--bg);
+  color: var(--text);
+  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+#editorInput:focus {
+  border-color: var(--link);
+}
+
+.editor-preview {
+  width: 100%;
+  min-height: calc(100vh - 126px);
+  margin: 0;
+  padding-left: 24px;
+  border-left: 1px solid var(--soft-border);
 }
 
 .markdown-body.is-empty {
@@ -308,6 +380,30 @@ body {
 
   .workspace {
     padding: 28px 18px 48px;
+  }
+
+  .edit-bar {
+    top: auto;
+    right: 12px;
+    bottom: 10px;
+    left: 12px;
+    justify-content: center;
+    background: var(--bg);
+  }
+
+  .editor-layout {
+    grid-template-columns: 1fr;
+  }
+
+  #editorInput,
+  .editor-preview {
+    min-height: 46vh;
+  }
+
+  .editor-preview {
+    padding: 18px 0 0;
+    border-top: 1px solid var(--soft-border);
+    border-left: 0;
   }
 
   .markdown-body {

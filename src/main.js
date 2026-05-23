@@ -11,6 +11,8 @@ let pendingOpenFile = null;
 let watchedFile = null;
 let watcher = null;
 let themeMode = 'system';
+let currentFilePath = null;
+let isEditing = false;
 
 const isMarkdownFile = (filePath) => /\.(md|markdown|mdown|mkd)$/i.test(filePath);
 const isThemeMode = (mode) => ['system', 'light', 'dark'].includes(mode);
@@ -82,6 +84,11 @@ async function readMarkdown(filePath) {
   };
 }
 
+function setCurrentFilePath(filePath) {
+  currentFilePath = filePath;
+  createMenu();
+}
+
 function watchFile(filePath) {
   if (watcher) {
     watcher.close();
@@ -108,7 +115,13 @@ async function loadFileIntoWindow(filePath) {
     return;
   }
 
+  const canProceed = await mainWindow.webContents.executeJavaScript(
+    'window.__xpmdCanReplaceDocument ? window.__xpmdCanReplaceDocument() : true'
+  );
+  if (!canProceed) return;
+
   const payload = await readMarkdown(filePath);
+  setCurrentFilePath(filePath);
   watchFile(filePath);
   mainWindow.webContents.send('markdown-opened', payload);
 }
@@ -126,6 +139,36 @@ async function openFilePicker() {
   if (!result.canceled && result.filePaths[0]) {
     await loadFileIntoWindow(result.filePaths[0]);
   }
+}
+
+async function saveMarkdown(content, targetPath = currentFilePath) {
+  if (!targetPath || !isMarkdownFile(targetPath)) {
+    throw new Error('请选择 Markdown 文件。');
+  }
+
+  await fsp.writeFile(targetPath, content, 'utf8');
+  setCurrentFilePath(targetPath);
+  watchFile(targetPath);
+  return readMarkdown(targetPath);
+}
+
+async function saveMarkdownAs(content) {
+  const result = await dialog.showSaveDialog(mainWindow, {
+    title: '另存为 Markdown',
+    defaultPath: currentFilePath || '未命名.md',
+    filters: [
+      { name: 'Markdown', extensions: ['md', 'markdown'] }
+    ]
+  });
+
+  if (result.canceled || !result.filePath) return null;
+
+  const targetPath = isMarkdownFile(result.filePath) ? result.filePath : `${result.filePath}.md`;
+  return saveMarkdown(content, targetPath);
+}
+
+function sendEditCommand(command) {
+  mainWindow?.webContents.send('edit-command', command);
 }
 
 function createMenu() {
@@ -149,6 +192,18 @@ function createMenu() {
           label: '打开...',
           accelerator: 'CommandOrControl+O',
           click: openFilePicker
+        },
+        {
+          label: '保存',
+          accelerator: 'CommandOrControl+S',
+          enabled: Boolean(currentFilePath) && isEditing,
+          click: () => sendEditCommand('save')
+        },
+        {
+          label: '另存为...',
+          accelerator: 'CommandOrControl+Shift+S',
+          enabled: isEditing,
+          click: () => sendEditCommand('saveAs')
         },
         { type: 'separator' },
         { role: 'close' }
@@ -186,6 +241,12 @@ function createMenu() {
       label: '编辑',
       submenu: [
         { role: 'copy' },
+        {
+          label: isEditing ? '退出编辑模式' : '进入编辑模式',
+          accelerator: 'CommandOrControl+E',
+          enabled: Boolean(currentFilePath),
+          click: () => sendEditCommand('toggleEdit')
+        },
         {
           label: '查找',
           accelerator: 'CommandOrControl+F',
@@ -234,6 +295,53 @@ function createWindow() {
     return { action: 'deny' };
   });
 
+  mainWindow.webContents.on('context-menu', (_event, params) => {
+    const menuItems = [];
+
+    if (params.isEditable) {
+      menuItems.push(
+        { label: '撤销', role: 'undo' },
+        { label: '重做', role: 'redo' },
+        { type: 'separator' },
+        { label: '剪切', role: 'cut' },
+        { label: '复制', role: 'copy' },
+        { label: '粘贴', role: 'paste' },
+        { type: 'separator' },
+        { label: '全选', role: 'selectAll' }
+      );
+      Menu.buildFromTemplate(menuItems).popup({ window: mainWindow });
+      return;
+    }
+
+    if (params.selectionText) {
+      menuItems.push({ label: '复制', role: 'copy' });
+    }
+
+    if (params.linkURL) {
+      if (menuItems.length) menuItems.push({ type: 'separator' });
+      menuItems.push({
+        label: '打开链接',
+        click: () => shell.openExternal(params.linkURL)
+      });
+      menuItems.push({
+        label: '复制链接',
+        click: () => mainWindow.webContents.copyLinkAt(params.x, params.y)
+      });
+    }
+
+    if (!menuItems.length) {
+      menuItems.push({
+        label: '打开 Markdown 文件',
+        click: openFilePicker
+      });
+    }
+
+    menuItems.push({ type: 'separator' });
+    menuItems.push({ label: '全选', role: 'selectAll' });
+
+    Menu.buildFromTemplate(menuItems).popup({ window: mainWindow });
+  });
+
   mainWindow.webContents.on('did-finish-load', async () => {
     sendTheme();
 
@@ -247,6 +355,17 @@ function createWindow() {
   mainWindow.on('closed', () => {
     mainWindow = null;
     if (watcher) watcher.close();
+  });
+
+  mainWindow.on('close', async (event) => {
+    if (!mainWindow) return;
+    event.preventDefault();
+    const canClose = await mainWindow.webContents.executeJavaScript(
+      'window.__xpmdCanReplaceDocument ? window.__xpmdCanReplaceDocument() : true'
+    );
+    if (canClose) {
+      mainWindow.destroy();
+    }
   });
 }
 
@@ -284,6 +403,20 @@ ipcMain.handle('file:openPath', async (_event, filePath) => {
   await loadFileIntoWindow(filePath);
 });
 ipcMain.handle('theme:get', () => getThemePayload());
+ipcMain.handle('editor:save', async (_event, content) => {
+  const payload = await saveMarkdown(content);
+  mainWindow?.webContents.send('markdown-opened', payload);
+  return payload;
+});
+ipcMain.handle('editor:saveAs', async (_event, content) => {
+  const payload = await saveMarkdownAs(content);
+  if (payload) mainWindow?.webContents.send('markdown-opened', payload);
+  return payload;
+});
+ipcMain.handle('editor:setEditing', (_event, value) => {
+  isEditing = Boolean(value);
+  createMenu();
+});
 ipcMain.handle('search:find', (event, query, options = {}) => {
   const webContents = event.sender;
   if (!query) {

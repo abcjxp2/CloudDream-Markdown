@@ -12,8 +12,18 @@
       <div class="search-box" role="search">
         <input id="searchInput" type="search" placeholder="搜索" autocomplete="off" spellcheck="false" />
       </div>
+      <div class="edit-bar" id="editBar" hidden>
+        <span>编辑模式</span>
+        <button id="saveButton" type="button">保存</button>
+        <button id="saveAsButton" type="button">另存为</button>
+        <button id="exitEditButton" type="button">退出</button>
+      </div>
       <section class="empty-state" id="emptyState">
         <button class="open-button" id="openButton" type="button">打开 Markdown 文件</button>
+      </section>
+      <section class="editor-layout" id="editorLayout" hidden>
+        <textarea id="editorInput" spellcheck="false"></textarea>
+        <article class="markdown-body editor-preview" id="editorPreview"></article>
       </section>
       <article class="markdown-body" id="preview"></article>
     </main>

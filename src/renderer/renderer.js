@@ -8,8 +8,18 @@ const highlightTheme = document.querySelector('#highlightTheme');
 const emptyState = document.querySelector('#emptyState');
 const openButton = document.querySelector('#openButton');
 const searchInput = document.querySelector('#searchInput');
+const editBar = document.querySelector('#editBar');
+const editorLayout = document.querySelector('#editorLayout');
+const editorInput = document.querySelector('#editorInput');
+const editorPreview = document.querySelector('#editorPreview');
+const saveButton = document.querySelector('#saveButton');
+const saveAsButton = document.querySelector('#saveAsButton');
+const exitEditButton = document.querySelector('#exitEditButton');
 let currentDirectory = null;
 let currentDirectoryUrl = null;
+let currentMarkdown = '';
+let editMode = false;
+let dirty = false;
 
 const initialMarkdown = '';
 
@@ -43,16 +53,18 @@ function resolveFileUrl(href) {
   return new URL(href, currentDirectoryUrl).href;
 }
 
-function renderMarkdown(markdown) {
+function renderMarkdown(markdown, target = preview) {
   const isEmpty = markdown.trim().length === 0;
-  preview.classList.toggle('is-empty', isEmpty);
-  emptyState.hidden = !isEmpty;
+  if (target === preview) {
+    preview.classList.toggle('is-empty', isEmpty);
+    emptyState.hidden = editMode || !isEmpty;
+  }
   const raw = marked.parse(markdown);
-  preview.innerHTML = DOMPurify.sanitize(raw, {
+  target.innerHTML = DOMPurify.sanitize(raw, {
     ADD_ATTR: ['target', 'rel']
   });
 
-  preview.querySelectorAll('pre code').forEach((block) => {
+  target.querySelectorAll('pre code').forEach((block) => {
     hljs.highlightElement(block);
   });
 }
@@ -60,16 +72,82 @@ function renderMarkdown(markdown) {
 function setFile(payload) {
   currentDirectory = payload.directory;
   currentDirectoryUrl = payload.directoryUrl;
-  renderMarkdown(payload.content);
+  currentMarkdown = payload.content;
+  if (editMode && dirty) return;
+  if (editMode) {
+    editorInput.value = currentMarkdown;
+    renderMarkdown(currentMarkdown, editorPreview);
+  }
+  renderMarkdown(currentMarkdown);
 }
 
 function showError(message) {
   renderMarkdown(`# 打开失败\n\n> ${message}`);
 }
 
+function setEditMode(value) {
+  if (value && !currentMarkdown) return;
+  if (!value && !canReplaceDocument()) return;
+
+  editMode = value;
+  dirty = false;
+  document.body.classList.toggle('is-editing', editMode);
+  editBar.hidden = !editMode;
+  editorLayout.hidden = !editMode;
+  preview.hidden = editMode;
+  emptyState.hidden = editMode || currentMarkdown.trim().length > 0;
+  window.xpmd.setEditing(editMode);
+
+  if (editMode) {
+    editorInput.value = currentMarkdown;
+    renderMarkdown(currentMarkdown, editorPreview);
+    editorInput.focus();
+  }
+}
+
+async function saveCurrent() {
+  try {
+    const payload = await window.xpmd.saveMarkdown(editorInput.value);
+    if (!payload) return;
+    currentMarkdown = payload.content;
+    dirty = false;
+    renderMarkdown(currentMarkdown, editorPreview);
+    renderMarkdown(currentMarkdown);
+  } catch (error) {
+    alert(error.message || '保存失败');
+  }
+}
+
+async function saveCurrentAs() {
+  try {
+    const payload = await window.xpmd.saveMarkdownAs(editorInput.value);
+    if (!payload) return;
+    currentMarkdown = payload.content;
+    dirty = false;
+    renderMarkdown(currentMarkdown, editorPreview);
+    renderMarkdown(currentMarkdown);
+  } catch (error) {
+    alert(error.message || '另存为失败');
+  }
+}
+
+function canReplaceDocument() {
+  if (!editMode || !dirty) return true;
+  return confirm('有未保存修改，确定放弃？');
+}
+
 openButton.addEventListener('click', () => {
   window.xpmd.openMarkdown();
 });
+
+editorInput.addEventListener('input', () => {
+  dirty = editorInput.value !== currentMarkdown;
+  renderMarkdown(editorInput.value, editorPreview);
+});
+
+saveButton.addEventListener('click', saveCurrent);
+saveAsButton.addEventListener('click', saveCurrentAs);
+exitEditButton.addEventListener('click', () => setEditMode(false));
 
 searchInput.addEventListener('input', () => {
   const query = searchInput.value.trim();
@@ -127,6 +205,11 @@ window.xpmd.onMarkdownOpened(setFile);
 window.xpmd.onMarkdownUpdated(setFile);
 window.xpmd.onMarkdownError(showError);
 window.xpmd.onThemeChanged(applyTheme);
+window.xpmd.onEditCommand((command) => {
+  if (command === 'toggleEdit') setEditMode(!editMode);
+  if (command === 'save' && editMode) saveCurrent();
+  if (command === 'saveAs' && editMode) saveCurrentAs();
+});
 window.xpmd.onSearchFocus(() => {
   searchInput.focus();
   searchInput.select();
@@ -142,3 +225,4 @@ function applyTheme(payload) {
 }
 
 window.xpmd.getTheme().then(applyTheme);
+window.__xpmdCanReplaceDocument = canReplaceDocument;
