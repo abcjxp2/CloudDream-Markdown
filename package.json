@@ -5,9 +5,10 @@
   "main": "src/main.js",
   "type": "module",
   "scripts": {
+    "build:icon": "node scripts/build-icon.js",
     "prepare:vendor": "node scripts/sync-vendor.js",
     "start": "npm run prepare:vendor && electron .",
-    "package": "npm run prepare:vendor && node scripts/package-mac.js"
+    "package": "npm run prepare:vendor && npm run build:icon && node scripts/package-mac.js"
   },
   "dependencies": {
     "@highlightjs/cdn-assets": "^11.11.1",

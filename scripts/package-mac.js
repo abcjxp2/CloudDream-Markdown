@@ -10,6 +10,7 @@ const electronApp = path.join(rootDir, 'node_modules', 'electron', 'dist', 'Elec
 const releaseDir = path.join(rootDir, 'release');
 const targetApp = path.join(releaseDir, 'XPMD.app');
 const appResources = path.join(targetApp, 'Contents', 'Resources', 'app');
+const iconPath = path.join(rootDir, 'assets', 'XPMD.icns');
 
 const run = promisify(execFile);
 
@@ -42,6 +43,10 @@ async function patchInfoPlist() {
     .replace(
       '<key>CFBundleName</key>\n\t<string>Electron</string>',
       '<key>CFBundleName</key>\n\t<string>XPMD</string>'
+    )
+    .replace(
+      '<key>CFBundleIconFile</key>\n\t<string>electron.icns</string>',
+      '<key>CFBundleIconFile</key>\n\t<string>XPMD.icns</string>'
     )
     .replace(
       '<key>CFBundleIdentifier</key>\n\t<string>com.github.Electron</string>',
@@ -80,10 +85,14 @@ async function main() {
   if (!(await pathExists(electronApp))) {
     throw new Error('Electron runtime not found. Run npm install first.');
   }
+  if (!(await pathExists(iconPath))) {
+    throw new Error('App icon not found. Run npm run build:icon first.');
+  }
 
   await run('rm', ['-rf', releaseDir]);
   await fs.mkdir(releaseDir, { recursive: true });
   await run('cp', ['-R', electronApp, targetApp]);
+  await run('cp', [iconPath, path.join(targetApp, 'Contents', 'Resources', 'XPMD.icns')]);
 
   await fs.rm(path.join(targetApp, 'Contents', 'Resources', 'default_app.asar'), { force: true });
   await fs.mkdir(appResources, { recursive: true });

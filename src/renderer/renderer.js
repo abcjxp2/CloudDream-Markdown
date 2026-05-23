@@ -5,6 +5,8 @@ import DOMPurify from './vendor/dompurify/purify.es.mjs';
 const preview = document.querySelector('#preview');
 const dropZone = document.querySelector('#dropZone');
 const highlightTheme = document.querySelector('#highlightTheme');
+const emptyState = document.querySelector('#emptyState');
+const openButton = document.querySelector('#openButton');
 let currentDirectory = null;
 let currentDirectoryUrl = null;
 
@@ -41,7 +43,9 @@ function resolveFileUrl(href) {
 }
 
 function renderMarkdown(markdown) {
-  preview.classList.toggle('is-empty', markdown.trim().length === 0);
+  const isEmpty = markdown.trim().length === 0;
+  preview.classList.toggle('is-empty', isEmpty);
+  emptyState.hidden = !isEmpty;
   const raw = marked.parse(markdown);
   preview.innerHTML = DOMPurify.sanitize(raw, {
     ADD_ATTR: ['target', 'rel']
@@ -62,6 +66,10 @@ function showError(message) {
   renderMarkdown(`# 打开失败\n\n> ${message}`);
 }
 
+openButton.addEventListener('click', () => {
+  window.xpmd.openMarkdown();
+});
+
 dropZone.addEventListener('dragover', (event) => {
   event.preventDefault();
   dropZone.classList.add('is-dragging');
@@ -78,12 +86,14 @@ dropZone.addEventListener('drop', async (event) => {
   const file = event.dataTransfer.files[0];
   if (!file) return;
 
-  if (!/\.(md|markdown|mdown|mkd)$/i.test(file.path)) {
+  const filePath = window.xpmd.getPathForFile(file);
+
+  if (!/\.(md|markdown|mdown|mkd)$/i.test(filePath)) {
     showError('这里只接受 Markdown 文件。');
     return;
   }
 
-  await window.xpmd.openPath(file.path);
+  await window.xpmd.openPath(filePath);
 });
 
 window.xpmd.onMarkdownOpened(setFile);

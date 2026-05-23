@@ -1,8 +1,9 @@
-const { contextBridge, ipcRenderer } = require('electron');
+const { contextBridge, ipcRenderer, webUtils } = require('electron');
 
 contextBridge.exposeInMainWorld('xpmd', {
   openMarkdown: () => ipcRenderer.invoke('dialog:openMarkdown'),
   openPath: (filePath) => ipcRenderer.invoke('file:openPath', filePath),
+  getPathForFile: (file) => webUtils?.getPathForFile(file) || file?.path || '',
   getTheme: () => ipcRenderer.invoke('theme:get'),
   onMarkdownOpened: (callback) => ipcRenderer.on('markdown-opened', (_event, payload) => callback(payload)),
   onMarkdownUpdated: (callback) => ipcRenderer.on('markdown-updated', (_event, payload) => callback(payload)),
