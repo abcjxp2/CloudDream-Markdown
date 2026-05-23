@@ -1,7 +1,7 @@
 {
   "name": "xpmd",
   "version": "0.1.0",
-  "description": "A focused macOS Markdown viewer.",
+  "description": "云梦Markdown desktop viewer.",
   "main": "src/main.js",
   "type": "module",
   "scripts": {

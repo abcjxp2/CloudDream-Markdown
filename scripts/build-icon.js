@@ -7,8 +7,8 @@ import { promisify } from 'node:util';
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const run = promisify(execFile);
 const pngPath = path.join(rootDir, 'assets', 'icon-1024.png');
-const iconsetDir = path.join(rootDir, 'assets', 'XPMD.iconset');
-const icnsPath = path.join(rootDir, 'assets', 'XPMD.icns');
+const iconsetDir = path.join(rootDir, 'assets', 'YunmengMarkdown.iconset');
+const icnsPath = path.join(rootDir, 'assets', 'YunmengMarkdown.icns');
 
 const iconSizes = [
   ['icon_16x16.png', 16],

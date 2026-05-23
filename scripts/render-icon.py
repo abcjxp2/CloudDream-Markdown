@@ -53,7 +53,7 @@ for y in range(mask.height):
             outline_pixels[x, y] = 255
 
 canvas = Image.new("RGBA", (1024, 1024), (255, 255, 255, 255))
-line = Image.new("RGBA", outline.size, (17, 17, 17, 255))
+line = Image.new("RGBA", outline.size, (56, 56, 57, 255))
 x = (1024 - outline.width) // 2
 y = (1024 - outline.height) // 2
 canvas.paste(line, (x, y), outline)

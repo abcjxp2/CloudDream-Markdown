@@ -8,9 +8,10 @@ import { resolveVendorTarget, vendorFiles } from './vendor-files.js';
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const electronApp = path.join(rootDir, 'node_modules', 'electron', 'dist', 'Electron.app');
 const releaseDir = path.join(rootDir, 'release');
-const targetApp = path.join(releaseDir, 'XPMD.app');
+const productName = '云梦Markdown';
+const targetApp = path.join(releaseDir, `${productName}.app`);
 const appResources = path.join(targetApp, 'Contents', 'Resources', 'app');
-const iconPath = path.join(rootDir, 'assets', 'XPMD.icns');
+const iconPath = path.join(rootDir, 'assets', 'YunmengMarkdown.icns');
 
 const run = promisify(execFile);
 
@@ -38,19 +39,19 @@ async function patchInfoPlist() {
   plist = plist
     .replace(
       '<key>CFBundleDisplayName</key>\n\t<string>Electron</string>',
-      '<key>CFBundleDisplayName</key>\n\t<string>XPMD</string>'
+      `<key>CFBundleDisplayName</key>\n\t<string>${productName}</string>`
     )
     .replace(
       '<key>CFBundleName</key>\n\t<string>Electron</string>',
-      '<key>CFBundleName</key>\n\t<string>XPMD</string>'
+      `<key>CFBundleName</key>\n\t<string>${productName}</string>`
     )
     .replace(
       '<key>CFBundleIconFile</key>\n\t<string>electron.icns</string>',
-      '<key>CFBundleIconFile</key>\n\t<string>XPMD.icns</string>'
+      '<key>CFBundleIconFile</key>\n\t<string>YunmengMarkdown.icns</string>'
     )
     .replace(
       '<key>CFBundleIdentifier</key>\n\t<string>com.github.Electron</string>',
-      '<key>CFBundleIdentifier</key>\n\t<string>com.local.xpmd</string>'
+      '<key>CFBundleIdentifier</key>\n\t<string>com.local.yunmeng-markdown</string>'
     );
 
   const documentTypes = `
@@ -92,7 +93,7 @@ async function main() {
   await run('rm', ['-rf', releaseDir]);
   await fs.mkdir(releaseDir, { recursive: true });
   await run('cp', ['-R', electronApp, targetApp]);
-  await run('cp', [iconPath, path.join(targetApp, 'Contents', 'Resources', 'XPMD.icns')]);
+  await run('cp', [iconPath, path.join(targetApp, 'Contents', 'Resources', 'YunmengMarkdown.icns')]);
 
   await fs.rm(path.join(targetApp, 'Contents', 'Resources', 'default_app.asar'), { force: true });
   await fs.mkdir(appResources, { recursive: true });

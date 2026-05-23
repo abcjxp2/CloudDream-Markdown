@@ -245,7 +245,7 @@ function createWindow() {
   });
 }
 
-app.setName('XPMD');
+app.setName('云梦Markdown');
 
 app.whenReady().then(async () => {
   await loadSettings();
