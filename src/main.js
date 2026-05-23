@@ -1,4 +1,4 @@
-import { app, BrowserWindow, dialog, ipcMain, Menu, shell } from 'electron';
+import { app, BrowserWindow, dialog, ipcMain, Menu, nativeTheme, shell } from 'electron';
 import fs from 'node:fs';
 import fsp from 'node:fs/promises';
 import path from 'node:path';
@@ -10,8 +10,62 @@ let mainWindow;
 let pendingOpenFile = null;
 let watchedFile = null;
 let watcher = null;
+let themeMode = 'system';
 
 const isMarkdownFile = (filePath) => /\.(md|markdown|mdown|mkd)$/i.test(filePath);
+const isThemeMode = (mode) => ['system', 'light', 'dark'].includes(mode);
+
+function getThemeConfigPath() {
+  return path.join(app.getPath('userData'), 'settings.json');
+}
+
+function getResolvedTheme() {
+  if (themeMode === 'dark') return 'dark';
+  if (themeMode === 'light') return 'light';
+  return nativeTheme.shouldUseDarkColors ? 'dark' : 'light';
+}
+
+function getThemePayload() {
+  return {
+    mode: themeMode,
+    resolvedTheme: getResolvedTheme()
+  };
+}
+
+async function loadSettings() {
+  try {
+    const settings = JSON.parse(await fsp.readFile(getThemeConfigPath(), 'utf8'));
+    themeMode = isThemeMode(settings.themeMode) ? settings.themeMode : 'system';
+  } catch {
+    themeMode = 'system';
+  }
+
+  nativeTheme.themeSource = themeMode;
+}
+
+async function saveSettings() {
+  await fsp.mkdir(app.getPath('userData'), { recursive: true });
+  await fsp.writeFile(
+    getThemeConfigPath(),
+    `${JSON.stringify({ themeMode }, null, 2)}\n`
+  );
+}
+
+function sendTheme() {
+  if (!mainWindow) return;
+  mainWindow.setBackgroundColor(getResolvedTheme() === 'dark' ? '#0d1117' : '#ffffff');
+  mainWindow.webContents.send('theme-changed', getThemePayload());
+}
+
+async function setThemeMode(mode) {
+  if (!isThemeMode(mode)) return;
+
+  themeMode = mode;
+  nativeTheme.themeSource = mode;
+  await saveSettings();
+  createMenu();
+  sendTheme();
+}
 
 async function readMarkdown(filePath) {
   if (!filePath || !isMarkdownFile(filePath)) {
@@ -101,6 +155,34 @@ function createMenu() {
       ]
     },
     {
+      label: '设置',
+      submenu: [
+        {
+          label: '主题',
+          submenu: [
+            {
+              label: '跟随系统',
+              type: 'radio',
+              checked: themeMode === 'system',
+              click: () => setThemeMode('system')
+            },
+            {
+              label: '浅色',
+              type: 'radio',
+              checked: themeMode === 'light',
+              click: () => setThemeMode('light')
+            },
+            {
+              label: '深色',
+              type: 'radio',
+              checked: themeMode === 'dark',
+              click: () => setThemeMode('dark')
+            }
+          ]
+        }
+      ]
+    },
+    {
       label: '编辑',
       submenu: [
         { role: 'copy' },
@@ -132,7 +214,7 @@ function createWindow() {
     minWidth: 760,
     minHeight: 560,
     titleBarStyle: 'hiddenInset',
-    backgroundColor: '#f7f4ed',
+    backgroundColor: getResolvedTheme() === 'dark' ? '#0d1117' : '#ffffff',
     webPreferences: {
       preload: path.join(__dirname, 'preload.cjs'),
       contextIsolation: true,
@@ -148,6 +230,8 @@ function createWindow() {
   });
 
   mainWindow.webContents.on('did-finish-load', async () => {
+    sendTheme();
+
     if (pendingOpenFile) {
       const target = pendingOpenFile;
       pendingOpenFile = null;
@@ -163,7 +247,8 @@ function createWindow() {
 
 app.setName('XPMD');
 
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
+  await loadSettings();
   createMenu();
   createWindow();
 
@@ -173,6 +258,10 @@ app.whenReady().then(() => {
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
+});
+
+nativeTheme.on('updated', () => {
+  if (themeMode === 'system') sendTheme();
 });
 
 app.on('open-file', (event, filePath) => {
@@ -189,3 +278,4 @@ ipcMain.handle('dialog:openMarkdown', openFilePicker);
 ipcMain.handle('file:openPath', async (_event, filePath) => {
   await loadFileIntoWindow(filePath);
 });
+ipcMain.handle('theme:get', () => getThemePayload());

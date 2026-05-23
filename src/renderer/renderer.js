@@ -2,36 +2,13 @@ import { marked } from './vendor/marked/marked.esm.js';
 import hljs from './vendor/highlight/highlight.min.js';
 import DOMPurify from './vendor/dompurify/purify.es.mjs';
 
-const openButton = document.querySelector('#openButton');
-const fileName = document.querySelector('#fileName');
-const filePath = document.querySelector('#filePath');
 const preview = document.querySelector('#preview');
 const dropZone = document.querySelector('#dropZone');
+const highlightTheme = document.querySelector('#highlightTheme');
 let currentDirectory = null;
 let currentDirectoryUrl = null;
 
-const initialMarkdown = `# XPMD
-
-把 Markdown 文件拖到窗口里，或点左侧按钮打开。
-
-## 支持内容
-
-- GitHub 风格 Markdown
-- 表格、任务列表、引用
-- 代码高亮
-- 本地文件保存后自动刷新
-
-| 操作 | 方式 |
-|---|---|
-| 打开文件 | Command+O |
-| 拖拽文件 | 直接拖入窗口 |
-| 缩放预览 | Command++ / Command+- |
-
-\`\`\`js
-const viewer = 'XPMD';
-console.log(\`\${viewer} is ready.\`);
-\`\`\`
-`;
+const initialMarkdown = '';
 
 marked.use({
   gfm: true,
@@ -64,6 +41,7 @@ function resolveFileUrl(href) {
 }
 
 function renderMarkdown(markdown) {
+  preview.classList.toggle('is-empty', markdown.trim().length === 0);
   const raw = marked.parse(markdown);
   preview.innerHTML = DOMPurify.sanitize(raw, {
     ADD_ATTR: ['target', 'rel']
@@ -77,18 +55,12 @@ function renderMarkdown(markdown) {
 function setFile(payload) {
   currentDirectory = payload.directory;
   currentDirectoryUrl = payload.directoryUrl;
-  fileName.textContent = payload.name;
-  filePath.textContent = payload.filePath;
   renderMarkdown(payload.content);
 }
 
 function showError(message) {
   renderMarkdown(`# 打开失败\n\n> ${message}`);
 }
-
-openButton.addEventListener('click', () => {
-  window.xpmd.openMarkdown();
-});
 
 dropZone.addEventListener('dragover', (event) => {
   event.preventDefault();
@@ -117,6 +89,15 @@ dropZone.addEventListener('drop', async (event) => {
 window.xpmd.onMarkdownOpened(setFile);
 window.xpmd.onMarkdownUpdated(setFile);
 window.xpmd.onMarkdownError(showError);
+window.xpmd.onThemeChanged(applyTheme);
 
 renderMarkdown(initialMarkdown);
-window.lucide.createIcons();
+
+function applyTheme(payload) {
+  document.documentElement.dataset.theme = payload.resolvedTheme;
+  highlightTheme.href = payload.resolvedTheme === 'dark'
+    ? './vendor/highlight/github-dark.min.css'
+    : './vendor/highlight/github.min.css';
+}
+
+window.xpmd.getTheme().then(applyTheme);
