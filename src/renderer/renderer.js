@@ -11,7 +11,6 @@ const searchInput = document.querySelector('#searchInput');
 const editBar = document.querySelector('#editBar');
 const editorLayout = document.querySelector('#editorLayout');
 const editorInput = document.querySelector('#editorInput');
-const editorPreview = document.querySelector('#editorPreview');
 const saveButton = document.querySelector('#saveButton');
 const saveAsButton = document.querySelector('#saveAsButton');
 const exitEditButton = document.querySelector('#exitEditButton');
@@ -76,7 +75,6 @@ function setFile(payload) {
   if (editMode && dirty) return;
   if (editMode) {
     editorInput.value = currentMarkdown;
-    renderMarkdown(currentMarkdown, editorPreview);
   }
   renderMarkdown(currentMarkdown);
 }
@@ -100,7 +98,6 @@ function setEditMode(value) {
 
   if (editMode) {
     editorInput.value = currentMarkdown;
-    renderMarkdown(currentMarkdown, editorPreview);
     editorInput.focus();
   }
 }
@@ -111,7 +108,6 @@ async function saveCurrent() {
     if (!payload) return;
     currentMarkdown = payload.content;
     dirty = false;
-    renderMarkdown(currentMarkdown, editorPreview);
     renderMarkdown(currentMarkdown);
   } catch (error) {
     alert(error.message || '保存失败');
@@ -124,7 +120,6 @@ async function saveCurrentAs() {
     if (!payload) return;
     currentMarkdown = payload.content;
     dirty = false;
-    renderMarkdown(currentMarkdown, editorPreview);
     renderMarkdown(currentMarkdown);
   } catch (error) {
     alert(error.message || '另存为失败');
@@ -142,7 +137,6 @@ openButton.addEventListener('click', () => {
 
 editorInput.addEventListener('input', () => {
   dirty = editorInput.value !== currentMarkdown;
-  renderMarkdown(editorInput.value, editorPreview);
 });
 
 saveButton.addEventListener('click', saveCurrent);

@@ -157,10 +157,8 @@ body {
 }
 
 .editor-layout {
-  display: grid;
-  grid-template-columns: minmax(280px, 0.9fr) minmax(360px, 1.1fr);
-  gap: 24px;
-  width: min(1180px, 100%);
+  display: block;
+  width: min(920px, 100%);
   min-height: calc(100vh - 126px);
   margin: 0 auto;
 }
@@ -186,14 +184,6 @@ body {
 
 #editorInput:focus {
   border-color: var(--link);
-}
-
-.editor-preview {
-  width: 100%;
-  min-height: calc(100vh - 126px);
-  margin: 0;
-  padding-left: 24px;
-  border-left: 1px solid var(--soft-border);
 }
 
 .markdown-body.is-empty {
@@ -391,19 +381,8 @@ body {
     background: var(--bg);
   }
 
-  .editor-layout {
-    grid-template-columns: 1fr;
-  }
-
-  #editorInput,
-  .editor-preview {
+  #editorInput {
     min-height: 46vh;
-  }
-
-  .editor-preview {
-    padding: 18px 0 0;
-    border-top: 1px solid var(--soft-border);
-    border-left: 0;
   }
 
   .markdown-body {
