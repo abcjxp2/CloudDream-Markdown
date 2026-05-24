@@ -14,6 +14,7 @@ let themeMode = 'system';
 let currentFilePath = null;
 let isEditing = false;
 
+const productName = '云梦Markdown';
 const isMarkdownFile = (filePath) => /\.(md|markdown|mdown|mkd)$/i.test(filePath);
 const isThemeMode = (mode) => ['system', 'light', 'dark'].includes(mode);
 
@@ -86,6 +87,7 @@ async function readMarkdown(filePath) {
 
 function setCurrentFilePath(filePath) {
   currentFilePath = filePath;
+  mainWindow?.setTitle(filePath ? `${path.basename(filePath)} - ${productName}` : productName);
   createMenu();
 }
 
@@ -279,7 +281,7 @@ function createWindow() {
     height: 820,
     minWidth: 760,
     minHeight: 560,
-    title: '云梦Markdown',
+    title: productName,
     backgroundColor: getResolvedTheme() === 'dark' ? '#0d1117' : '#ffffff',
     webPreferences: {
       preload: path.join(__dirname, 'preload.cjs'),
@@ -369,7 +371,7 @@ function createWindow() {
   });
 }
 
-app.setName('云梦Markdown');
+app.setName(productName);
 
 app.whenReady().then(async () => {
   await loadSettings();
