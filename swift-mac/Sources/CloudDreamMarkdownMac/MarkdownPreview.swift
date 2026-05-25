@@ -4,16 +4,17 @@ import WebKit
 struct MarkdownPreview: NSViewRepresentable {
     let markdown: String
     let searchText: String
+    let colorScheme: ColorScheme
 
     func makeNSView(context: Context) -> WKWebView {
         let webView = WKWebView()
         webView.setValue(false, forKey: "drawsBackground")
-        webView.loadHTMLString(Self.html(markdown: markdown), baseURL: nil)
+        webView.loadHTMLString(Self.html(markdown: markdown, colorScheme: colorScheme), baseURL: nil)
         return webView
     }
 
     func updateNSView(_ webView: WKWebView, context: Context) {
-        let html = Self.html(markdown: markdown)
+        let html = Self.html(markdown: markdown, colorScheme: colorScheme)
         webView.loadHTMLString(html, baseURL: nil)
 
         if !searchText.isEmpty {
@@ -45,7 +46,7 @@ struct MarkdownPreview: NSViewRepresentable {
         return Bundle.module.url(forResource: "marked.min", withExtension: "js")
     }
 
-    private static func html(markdown: String) -> String {
+    private static func html(markdown: String, colorScheme: ColorScheme) -> String {
         let markdownJSON: String
         if let data = try? JSONEncoder().encode(markdown),
            let encoded = String(data: data, encoding: .utf8) {
@@ -53,6 +54,7 @@ struct MarkdownPreview: NSViewRepresentable {
         } else {
             markdownJSON = "\"\""
         }
+        let colorSchemeName = colorScheme == .dark ? "dark" : "light"
 
         return """
         <!doctype html>
@@ -60,7 +62,7 @@ struct MarkdownPreview: NSViewRepresentable {
         <head>
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <style>
-            :root { color-scheme: light dark; }
+            :root { color-scheme: \(colorSchemeName); }
             body {
               margin: 0;
               padding: 42px 72px 72px;

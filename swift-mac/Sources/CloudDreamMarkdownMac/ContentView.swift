@@ -3,13 +3,19 @@ import UniformTypeIdentifiers
 
 struct ContentView: View {
     @Bindable var document: MarkdownDocument
+    let appearanceMode: AppearanceMode
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         VStack(spacing: 0) {
             if document.isEditing {
                 editor
             } else if document.hasDocument {
-                MarkdownPreview(markdown: document.content, searchText: document.searchText)
+                MarkdownPreview(
+                    markdown: document.content,
+                    searchText: document.searchText,
+                    colorScheme: colorScheme
+                )
             } else {
                 emptyState
             }
