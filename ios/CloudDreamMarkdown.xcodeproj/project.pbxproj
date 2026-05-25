@@ -1,0 +1,352 @@
+// !$*UTF8*$!
+{
+  archiveVersion = 1;
+  classes = {
+  };
+  objectVersion = 77;
+  objects = {
+
+/* Begin PBXBuildFile section */
+    4D0000210000000000000001 /* CloudDreamMarkdownApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0000110000000000000001 /* CloudDreamMarkdownApp.swift */; };
+    4D0000220000000000000001 /* AppearanceMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0000120000000000000001 /* AppearanceMode.swift */; };
+    4D0000230000000000000001 /* MarkdownDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0000130000000000000001 /* MarkdownDocument.swift */; };
+    4D0000240000000000000001 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0000140000000000000001 /* ContentView.swift */; };
+    4D0000250000000000000001 /* MarkdownPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0000150000000000000001 /* MarkdownPreview.swift */; };
+    4D0000260000000000000001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D0000160000000000000001 /* Assets.xcassets */; };
+    4D0000270000000000000001 /* marked.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 4D0000170000000000000001 /* marked.min.js */; };
+    4D0000280000000000000001 /* marked-LICENSE.md in Resources */ = {isa = PBXBuildFile; fileRef = 4D0000180000000000000001 /* marked-LICENSE.md */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+    4D0000010000000000000001 /* CloudDreamMarkdown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CloudDreamMarkdown.app; sourceTree = BUILT_PRODUCTS_DIR; };
+    4D0000110000000000000001 /* CloudDreamMarkdownApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDreamMarkdownApp.swift; sourceTree = "<group>"; };
+    4D0000120000000000000001 /* AppearanceMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceMode.swift; sourceTree = "<group>"; };
+    4D0000130000000000000001 /* MarkdownDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownDocument.swift; sourceTree = "<group>"; };
+    4D0000140000000000000001 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+    4D0000150000000000000001 /* MarkdownPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownPreview.swift; sourceTree = "<group>"; };
+    4D0000160000000000000001 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+    4D0000170000000000000001 /* marked.min.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = marked.min.js; sourceTree = "<group>"; };
+    4D0000180000000000000001 /* marked-LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "marked-LICENSE.md"; sourceTree = "<group>"; };
+    4D0000190000000000000001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+    4D0000310000000000000001 /* Frameworks */ = {
+      isa = PBXFrameworksBuildPhase;
+      buildActionMask = 2147483647;
+      files = (
+      );
+      runOnlyForDeploymentPostprocessing = 0;
+    };
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+    4D0000410000000000000001 = {
+      isa = PBXGroup;
+      children = (
+        4D0000420000000000000001 /* CloudDreamMarkdown */,
+        4D0000430000000000000001 /* Products */,
+      );
+      sourceTree = "<group>";
+    };
+    4D0000420000000000000001 /* CloudDreamMarkdown */ = {
+      isa = PBXGroup;
+      children = (
+        4D0000110000000000000001 /* CloudDreamMarkdownApp.swift */,
+        4D0000120000000000000001 /* AppearanceMode.swift */,
+        4D0000130000000000000001 /* MarkdownDocument.swift */,
+        4D0000140000000000000001 /* ContentView.swift */,
+        4D0000150000000000000001 /* MarkdownPreview.swift */,
+        4D0000160000000000000001 /* Assets.xcassets */,
+        4D0000440000000000000001 /* Resources */,
+        4D0000190000000000000001 /* Info.plist */,
+      );
+      path = CloudDreamMarkdown;
+      sourceTree = "<group>";
+    };
+    4D0000430000000000000001 /* Products */ = {
+      isa = PBXGroup;
+      children = (
+        4D0000010000000000000001 /* CloudDreamMarkdown.app */,
+      );
+      name = Products;
+      sourceTree = "<group>";
+    };
+    4D0000440000000000000001 /* Resources */ = {
+      isa = PBXGroup;
+      children = (
+        4D0000170000000000000001 /* marked.min.js */,
+        4D0000180000000000000001 /* marked-LICENSE.md */,
+      );
+      path = Resources;
+      sourceTree = "<group>";
+    };
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+    4D0000510000000000000001 /* CloudDreamMarkdown */ = {
+      isa = PBXNativeTarget;
+      buildConfigurationList = 4D0000610000000000000001 /* Build configuration list for PBXNativeTarget "CloudDreamMarkdown" */;
+      buildPhases = (
+        4D0000520000000000000001 /* Sources */,
+        4D0000310000000000000001 /* Frameworks */,
+        4D0000530000000000000001 /* Resources */,
+      );
+      buildRules = (
+      );
+      dependencies = (
+      );
+      name = CloudDreamMarkdown;
+      productName = CloudDreamMarkdown;
+      productReference = 4D0000010000000000000001 /* CloudDreamMarkdown.app */;
+      productType = "com.apple.product-type.application";
+    };
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+    4D0000710000000000000001 /* Project object */ = {
+      isa = PBXProject;
+      attributes = {
+        BuildIndependentTargetsInParallel = 1;
+        LastSwiftUpdateCheck = 2650;
+        LastUpgradeCheck = 2650;
+        TargetAttributes = {
+          4D0000510000000000000001 = {
+            CreatedOnToolsVersion = 26.5;
+          };
+        };
+      };
+      buildConfigurationList = 4D0000720000000000000001 /* Build configuration list for PBXProject "CloudDreamMarkdown" */;
+      developmentRegion = zh_CN;
+      hasScannedForEncodings = 0;
+      knownRegions = (
+        zh_CN,
+        en,
+        Base,
+      );
+      mainGroup = 4D0000410000000000000001;
+      minimizedProjectReferenceProxies = 1;
+      preferredProjectObjectVersion = 77;
+      productRefGroup = 4D0000430000000000000001 /* Products */;
+      projectDirPath = "";
+      projectRoot = "";
+      targets = (
+        4D0000510000000000000001 /* CloudDreamMarkdown */,
+      );
+    };
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+    4D0000530000000000000001 /* Resources */ = {
+      isa = PBXResourcesBuildPhase;
+      buildActionMask = 2147483647;
+      files = (
+        4D0000260000000000000001 /* Assets.xcassets in Resources */,
+        4D0000270000000000000001 /* marked.min.js in Resources */,
+        4D0000280000000000000001 /* marked-LICENSE.md in Resources */,
+      );
+      runOnlyForDeploymentPostprocessing = 0;
+    };
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+    4D0000520000000000000001 /* Sources */ = {
+      isa = PBXSourcesBuildPhase;
+      buildActionMask = 2147483647;
+      files = (
+        4D0000210000000000000001 /* CloudDreamMarkdownApp.swift in Sources */,
+        4D0000220000000000000001 /* AppearanceMode.swift in Sources */,
+        4D0000230000000000000001 /* MarkdownDocument.swift in Sources */,
+        4D0000240000000000000001 /* ContentView.swift in Sources */,
+        4D0000250000000000000001 /* MarkdownPreview.swift in Sources */,
+      );
+      runOnlyForDeploymentPostprocessing = 0;
+    };
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+    4D0000810000000000000001 /* Debug */ = {
+      isa = XCBuildConfiguration;
+      buildSettings = {
+        ALWAYS_SEARCH_USER_PATHS = NO;
+        CLANG_ANALYZER_NONNULL = YES;
+        CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+        CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+        CLANG_ENABLE_MODULES = YES;
+        CLANG_ENABLE_OBJC_ARC = YES;
+        CLANG_ENABLE_OBJC_WEAK = YES;
+        CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+        CLANG_WARN_BOOL_CONVERSION = YES;
+        CLANG_WARN_COMMA = YES;
+        CLANG_WARN_CONSTANT_CONVERSION = YES;
+        CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+        CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+        CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+        CLANG_WARN_EMPTY_BODY = YES;
+        CLANG_WARN_ENUM_CONVERSION = YES;
+        CLANG_WARN_INFINITE_RECURSION = YES;
+        CLANG_WARN_INT_CONVERSION = YES;
+        CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+        CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+        CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+        CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+        CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+        CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+        CLANG_WARN_STRICT_PROTOTYPES = YES;
+        CLANG_WARN_SUSPICIOUS_MOVE = YES;
+        CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+        CLANG_WARN_UNREACHABLE_CODE = YES;
+        CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+        COPY_PHASE_STRIP = NO;
+        DEBUG_INFORMATION_FORMAT = dwarf;
+        ENABLE_STRICT_OBJC_MSGSEND = YES;
+        ENABLE_TESTABILITY = YES;
+        ENABLE_USER_SCRIPT_SANDBOXING = YES;
+        GCC_C_LANGUAGE_STANDARD = gnu17;
+        GCC_DYNAMIC_NO_PIC = NO;
+        GCC_NO_COMMON_BLOCKS = YES;
+        GCC_OPTIMIZATION_LEVEL = 0;
+        GCC_PREPROCESSOR_DEFINITIONS = (
+          "DEBUG=1",
+          "$(inherited)",
+        );
+        GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+        GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+        GCC_WARN_UNDECLARED_SELECTOR = YES;
+        GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+        GCC_WARN_UNUSED_FUNCTION = YES;
+        GCC_WARN_UNUSED_VARIABLE = YES;
+        IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+        LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+        MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+        MTL_FAST_MATH = YES;
+        ONLY_ACTIVE_ARCH = YES;
+        SDKROOT = iphoneos;
+        SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+        SWIFT_EMIT_LOC_STRINGS = YES;
+        SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+      };
+      name = Debug;
+    };
+    4D0000820000000000000001 /* Release */ = {
+      isa = XCBuildConfiguration;
+      buildSettings = {
+        ALWAYS_SEARCH_USER_PATHS = NO;
+        CLANG_ANALYZER_NONNULL = YES;
+        CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+        CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+        CLANG_ENABLE_MODULES = YES;
+        CLANG_ENABLE_OBJC_ARC = YES;
+        CLANG_ENABLE_OBJC_WEAK = YES;
+        CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+        CLANG_WARN_BOOL_CONVERSION = YES;
+        CLANG_WARN_COMMA = YES;
+        CLANG_WARN_CONSTANT_CONVERSION = YES;
+        CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+        CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+        CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+        CLANG_WARN_EMPTY_BODY = YES;
+        CLANG_WARN_ENUM_CONVERSION = YES;
+        CLANG_WARN_INFINITE_RECURSION = YES;
+        CLANG_WARN_INT_CONVERSION = YES;
+        CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+        CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+        CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+        CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+        CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+        CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+        CLANG_WARN_STRICT_PROTOTYPES = YES;
+        CLANG_WARN_SUSPICIOUS_MOVE = YES;
+        CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+        CLANG_WARN_UNREACHABLE_CODE = YES;
+        CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+        COPY_PHASE_STRIP = NO;
+        DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+        ENABLE_NS_ASSERTIONS = NO;
+        ENABLE_STRICT_OBJC_MSGSEND = YES;
+        ENABLE_TESTABILITY = NO;
+        ENABLE_USER_SCRIPT_SANDBOXING = YES;
+        GCC_C_LANGUAGE_STANDARD = gnu17;
+        GCC_NO_COMMON_BLOCKS = YES;
+        GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+        GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+        GCC_WARN_UNDECLARED_SELECTOR = YES;
+        GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+        GCC_WARN_UNUSED_FUNCTION = YES;
+        GCC_WARN_UNUSED_VARIABLE = YES;
+        IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+        LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+        MTL_ENABLE_DEBUG_INFO = NO;
+        MTL_FAST_MATH = YES;
+        SDKROOT = iphoneos;
+        SWIFT_COMPILATION_MODE = wholemodule;
+        SWIFT_EMIT_LOC_STRINGS = YES;
+        VALIDATE_PRODUCT = YES;
+      };
+      name = Release;
+    };
+    4D0000830000000000000001 /* Debug */ = {
+      isa = XCBuildConfiguration;
+      buildSettings = {
+        ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+        CODE_SIGN_STYLE = Automatic;
+        CURRENT_PROJECT_VERSION = 1;
+        DEVELOPMENT_TEAM = "";
+        GENERATE_INFOPLIST_FILE = NO;
+        INFOPLIST_FILE = CloudDreamMarkdown/Info.plist;
+        MARKETING_VERSION = 0.1.0;
+        PRODUCT_BUNDLE_IDENTIFIER = com.local.yunmeng-markdown.ios;
+        PRODUCT_NAME = CloudDreamMarkdown;
+        SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+        SUPPORTS_MACCATALYST = NO;
+        SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+        SWIFT_VERSION = 6.0;
+        TARGETED_DEVICE_FAMILY = "1,2";
+      };
+      name = Debug;
+    };
+    4D0000840000000000000001 /* Release */ = {
+      isa = XCBuildConfiguration;
+      buildSettings = {
+        ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+        CODE_SIGN_STYLE = Automatic;
+        CURRENT_PROJECT_VERSION = 1;
+        DEVELOPMENT_TEAM = "";
+        GENERATE_INFOPLIST_FILE = NO;
+        INFOPLIST_FILE = CloudDreamMarkdown/Info.plist;
+        MARKETING_VERSION = 0.1.0;
+        PRODUCT_BUNDLE_IDENTIFIER = com.local.yunmeng-markdown.ios;
+        PRODUCT_NAME = CloudDreamMarkdown;
+        SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+        SUPPORTS_MACCATALYST = NO;
+        SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+        SWIFT_VERSION = 6.0;
+        TARGETED_DEVICE_FAMILY = "1,2";
+      };
+      name = Release;
+    };
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+    4D0000610000000000000001 /* Build configuration list for PBXNativeTarget "CloudDreamMarkdown" */ = {
+      isa = XCConfigurationList;
+      buildConfigurations = (
+        4D0000830000000000000001 /* Debug */,
+        4D0000840000000000000001 /* Release */,
+      );
+      defaultConfigurationIsVisible = 0;
+      defaultConfigurationName = Release;
+    };
+    4D0000720000000000000001 /* Build configuration list for PBXProject "CloudDreamMarkdown" */ = {
+      isa = XCConfigurationList;
+      buildConfigurations = (
+        4D0000810000000000000001 /* Debug */,
+        4D0000820000000000000001 /* Release */,
+      );
+      defaultConfigurationIsVisible = 0;
+      defaultConfigurationName = Release;
+    };
+/* End XCConfigurationList section */
+  };
+  rootObject = 4D0000710000000000000001 /* Project object */;
+}

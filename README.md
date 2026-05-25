@@ -68,4 +68,20 @@ release/云梦Markdown.app
 
 ## 说明
 
-当前版本是 macOS 桌面版。iPhone/iPad 版本会在 macOS 体验稳定后，按同样的阅读和编辑策略另行实现。
+当前仓库包含 macOS SwiftUI 原生版、iPhone/iPad SwiftUI 版，以及保留用于对照的 Electron 旧版。
+
+## iPhone / iPad
+
+```bash
+open ios/CloudDreamMarkdown.xcodeproj
+```
+
+iOS 版支持打开 `.md` / `.markdown`、默认预览、显式编辑、保存、另存为、搜索，以及跟随系统 / 浅色 / 深色外观。
+
+命令行验证代码构建可用：
+
+```bash
+xcodebuild -project ios/CloudDreamMarkdown.xcodeproj -scheme CloudDreamMarkdown -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build CODE_SIGNING_ALLOWED=NO ASSETCATALOG_COMPILER_APPICON_NAME='' ASSETCATALOG_COMPILER_SKIP_APP_STORE_DEPLOYMENT=YES
+```
+
+本机当前 Xcode 26.5 SDK 与已安装 iOS 26.4 模拟器运行时不匹配，直接跑指定模拟器时会卡在 AppIcon 裁剪；安装匹配运行时或用 Xcode 选择可用目标后即可继续真机/归档流程。
