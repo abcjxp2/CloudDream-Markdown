@@ -1,6 +1,8 @@
 node_modules/
 dist/
 release/
+release-swift/
+swift-mac/.build/
 *.log
 .DS_Store
 npm-debug.log*

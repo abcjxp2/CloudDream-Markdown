@@ -2,6 +2,8 @@
 
 云梦Markdown 是一个面向 macOS 的轻量 Markdown 查看器。它默认保持纯预览体验，需要编辑时再显式进入编辑模式，避免误改原文件。
 
+当前主线是 SwiftUI 原生 macOS 版本，使用系统 WebKit 渲染 Markdown，不再随应用打包 Electron 运行时。
+
 ## 功能
 
 - 打开、拖拽查看本地 `.md` / `.markdown` 文件
@@ -14,12 +16,29 @@
 
 ## 开发运行
 
+### SwiftUI 原生版
+
+```bash
+scripts/package-swift-mac.sh
+open release-swift/云梦Markdown.app
+```
+
+原生版打包产物会生成在：
+
+```text
+release-swift/云梦Markdown.app
+```
+
+### Electron 旧版
+
 ```bash
 npm install
 npm start -- sample.md
 ```
 
-## 打包 macOS 应用
+Electron 旧版仍保留在仓库中，便于对照体验。
+
+## 打包 Electron 旧版
 
 ```bash
 npm run package
