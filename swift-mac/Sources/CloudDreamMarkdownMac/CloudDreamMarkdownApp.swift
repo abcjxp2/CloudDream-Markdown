@@ -19,6 +19,7 @@ struct CloudDreamMarkdownApp: App {
                 .preferredColorScheme(appearanceMode.colorScheme)
                 .onAppear {
                     appDelegate.document = document
+                    appDelegate.localizeMainMenuTitles()
                 }
                 .onOpenURL { url in
                     document.load(url: url)
@@ -75,6 +76,26 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private var pendingURLs: [URL] = []
+
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        localizeMainMenuTitles()
+    }
+
+    func localizeMainMenuTitles() {
+        let titleMap = [
+            "File": "文件",
+            "Edit": "编辑",
+            "View": "显示",
+            "Window": "窗口",
+            "Help": "帮助"
+        ]
+
+        NSApp.mainMenu?.items.forEach { item in
+            if let localizedTitle = titleMap[item.title] {
+                item.title = localizedTitle
+            }
+        }
+    }
 
     func application(_ application: NSApplication, open urls: [URL]) {
         guard let document else {

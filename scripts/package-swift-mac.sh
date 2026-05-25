@@ -31,6 +31,8 @@ cat > "$APP_DIR/Contents/Info.plist" <<'PLIST'
   <string>com.local.yunmeng-markdown.native</string>
   <key>CFBundleName</key>
   <string>云梦Markdown</string>
+  <key>CFBundleDevelopmentRegion</key>
+  <string>zh_CN</string>
   <key>CFBundlePackageType</key>
   <string>APPL</string>
   <key>CFBundleShortVersionString</key>
