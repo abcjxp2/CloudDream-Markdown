@@ -68,4 +68,24 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         urls.forEach { document.load(url: $0) }
     }
+
+    func application(_ sender: NSApplication, openFile filename: String) -> Bool {
+        openFilenames([filename])
+        return true
+    }
+
+    func application(_ sender: NSApplication, openFiles filenames: [String]) {
+        openFilenames(filenames)
+        sender.reply(toOpenOrPrint: .success)
+    }
+
+    private func openFilenames(_ filenames: [String]) {
+        let urls = filenames.map { URL(fileURLWithPath: $0) }
+        guard let document else {
+            pendingURLs.append(contentsOf: urls)
+            return
+        }
+
+        urls.forEach { document.load(url: $0) }
+    }
 }

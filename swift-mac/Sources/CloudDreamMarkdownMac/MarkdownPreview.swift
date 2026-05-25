@@ -8,13 +8,13 @@ struct MarkdownPreview: NSViewRepresentable {
     func makeNSView(context: Context) -> WKWebView {
         let webView = WKWebView()
         webView.setValue(false, forKey: "drawsBackground")
-        webView.loadHTMLString(Self.html(markdown: markdown), baseURL: Self.resourceBaseURL)
+        webView.loadHTMLString(Self.html(markdown: markdown), baseURL: nil)
         return webView
     }
 
     func updateNSView(_ webView: WKWebView, context: Context) {
         let html = Self.html(markdown: markdown)
-        webView.loadHTMLString(html, baseURL: Self.resourceBaseURL)
+        webView.loadHTMLString(html, baseURL: nil)
 
         if !searchText.isEmpty {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
@@ -23,16 +23,26 @@ struct MarkdownPreview: NSViewRepresentable {
         }
     }
 
-    private static var resourceBaseURL: URL {
+    private static var markedScript: String {
+        guard let url = markedScriptURL,
+              let script = try? String(contentsOf: url, encoding: .utf8) else {
+            return "window.__cloudDreamMarkedLoadError = true;"
+        }
+
+        return script
+    }
+
+    private static var markedScriptURL: URL? {
         if let bundledResourceURL = Bundle.main.url(
             forResource: "CloudDreamMarkdownMac_CloudDreamMarkdownMac",
             withExtension: "bundle"
         ),
-           let bundledResources = Bundle(url: bundledResourceURL)?.resourceURL {
-            return bundledResources
+           let bundledBundle = Bundle(url: bundledResourceURL),
+           let scriptURL = bundledBundle.url(forResource: "marked.min", withExtension: "js") {
+            return scriptURL
         }
 
-        return Bundle.module.resourceURL ?? Bundle.module.bundleURL
+        return Bundle.module.url(forResource: "marked.min", withExtension: "js")
     }
 
     private static func html(markdown: String) -> String {
@@ -74,13 +84,26 @@ struct MarkdownPreview: NSViewRepresentable {
             th, td { border: 1px solid color-mix(in srgb, CanvasText 22%, transparent); padding: 6px 13px; }
             th { font-weight: 600; background: color-mix(in srgb, CanvasText 7%, Canvas); }
           </style>
-          <script src="marked.min.js"></script>
+          <script>
+          \(markedScript)
+          </script>
         </head>
         <body>
           <main id="content"></main>
           <script>
-            marked.use({ gfm: true });
-            document.getElementById('content').innerHTML = marked.parse(\(markdownJSON));
+            const source = \(markdownJSON);
+            const renderer = window.marked;
+            const parseMarkdown =
+              renderer && typeof renderer.parse === 'function' ? renderer.parse.bind(renderer) :
+              renderer && typeof renderer.marked === 'function' ? renderer.marked.bind(renderer) :
+              typeof renderer === 'function' ? renderer :
+              null;
+
+            if (parseMarkdown) {
+              document.getElementById('content').innerHTML = parseMarkdown(source, { gfm: true });
+            } else {
+              document.getElementById('content').textContent = source;
+            }
           </script>
         </body>
         </html>
