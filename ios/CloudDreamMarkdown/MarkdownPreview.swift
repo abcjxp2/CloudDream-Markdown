@@ -11,18 +11,12 @@ struct MarkdownPreview: UIViewRepresentable {
         webView.isOpaque = false
         webView.backgroundColor = .clear
         webView.scrollView.backgroundColor = .clear
-        webView.loadHTMLString(Self.html(markdown: markdown, colorScheme: colorScheme), baseURL: nil)
+        webView.loadHTMLString(Self.html(markdown: markdown, searchText: searchText, colorScheme: colorScheme), baseURL: nil)
         return webView
     }
 
     func updateUIView(_ webView: WKWebView, context: Context) {
-        webView.loadHTMLString(Self.html(markdown: markdown, colorScheme: colorScheme), baseURL: nil)
-
-        if !searchText.isEmpty {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
-                webView.find(searchText, configuration: WKFindConfiguration()) { _ in }
-            }
-        }
+        webView.loadHTMLString(Self.html(markdown: markdown, searchText: searchText, colorScheme: colorScheme), baseURL: nil)
     }
 
     private static var markedScript: String {
@@ -34,13 +28,20 @@ struct MarkdownPreview: UIViewRepresentable {
         return script
     }
 
-    private static func html(markdown: String, colorScheme: ColorScheme) -> String {
+    private static func html(markdown: String, searchText: String, colorScheme: ColorScheme) -> String {
         let markdownJSON: String
         if let data = try? JSONEncoder().encode(markdown),
            let encoded = String(data: data, encoding: .utf8) {
             markdownJSON = encoded
         } else {
             markdownJSON = "\"\""
+        }
+        let searchJSON: String
+        if let data = try? JSONEncoder().encode(searchText.trimmingCharacters(in: .whitespacesAndNewlines)),
+           let encoded = String(data: data, encoding: .utf8) {
+            searchJSON = encoded
+        } else {
+            searchJSON = "\"\""
         }
         let colorSchemeName = colorScheme == .dark ? "dark" : "light"
 
@@ -74,6 +75,12 @@ struct MarkdownPreview: UIViewRepresentable {
             table { border-collapse: collapse; display: block; overflow: auto; width: max-content; max-width: 100%; }
             th, td { border: 1px solid color-mix(in srgb, CanvasText 22%, transparent); padding: 6px 13px; }
             th { font-weight: 600; background: color-mix(in srgb, CanvasText 7%, Canvas); }
+            mark.search-hit {
+              background: #ffe66d;
+              border-radius: 3px;
+              color: inherit;
+              padding: 0 .08em;
+            }
           </style>
           <script>
           \(markedScript)
@@ -83,6 +90,7 @@ struct MarkdownPreview: UIViewRepresentable {
           <main id="content"></main>
           <script>
             const source = \(markdownJSON);
+            const searchText = \(searchJSON);
             const renderer = window.marked;
             const parseMarkdown =
               renderer && typeof renderer.parse === 'function' ? renderer.parse.bind(renderer) :
@@ -95,6 +103,63 @@ struct MarkdownPreview: UIViewRepresentable {
             } else {
               document.getElementById('content').textContent = source;
             }
+
+            function escapeRegExp(value) {
+              return value.replace(/[|\\\\{}()[\\]^$+*?.]/g, '\\\\$&');
+            }
+
+            function highlightSearch(root, query) {
+              if (!query) { return; }
+
+              const pattern = new RegExp(escapeRegExp(query), 'gi');
+              const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+                acceptNode(node) {
+                  const parent = node.parentElement;
+                  if (!parent || !node.nodeValue || !pattern.test(node.nodeValue)) {
+                    pattern.lastIndex = 0;
+                    return NodeFilter.FILTER_REJECT;
+                  }
+
+                  pattern.lastIndex = 0;
+                  const ignored = ['SCRIPT', 'STYLE', 'MARK'];
+                  return ignored.includes(parent.tagName) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
+                }
+              });
+
+              const nodes = [];
+              while (walker.nextNode()) {
+                nodes.push(walker.currentNode);
+              }
+
+              for (const node of nodes) {
+                const fragment = document.createDocumentFragment();
+                const text = node.nodeValue;
+                let lastIndex = 0;
+                pattern.lastIndex = 0;
+
+                for (const match of text.matchAll(pattern)) {
+                  if (match.index > lastIndex) {
+                    fragment.append(document.createTextNode(text.slice(lastIndex, match.index)));
+                  }
+
+                  const mark = document.createElement('mark');
+                  mark.className = 'search-hit';
+                  mark.textContent = match[0];
+                  fragment.append(mark);
+                  lastIndex = match.index + match[0].length;
+                }
+
+                if (lastIndex < text.length) {
+                  fragment.append(document.createTextNode(text.slice(lastIndex)));
+                }
+
+                node.replaceWith(fragment);
+              }
+
+              document.querySelector('mark.search-hit')?.scrollIntoView({ block: 'center' });
+            }
+
+            highlightSearch(document.getElementById('content'), searchText);
           </script>
         </body>
         </html>

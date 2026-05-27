@@ -7,3 +7,6 @@ swift-mac/.build/
 .DS_Store
 npm-debug.log*
 coverage/
+*.xcuserstate
+xcuserdata/
+appstore-assets/current-*.png
