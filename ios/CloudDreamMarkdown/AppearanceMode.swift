@@ -10,11 +10,11 @@ enum AppearanceMode: String, CaseIterable, Identifiable {
     var title: String {
         switch self {
         case .system:
-            "跟随系统"
+            String(localized: "appearance.system")
         case .light:
-            "浅色"
+            String(localized: "appearance.light")
         case .dark:
-            "深色"
+            String(localized: "appearance.dark")
         }
     }
 

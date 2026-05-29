@@ -15,6 +15,7 @@
 		4D0000260000000000000001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D0000160000000000000001 /* Assets.xcassets */; };
 		4D0000270000000000000001 /* marked.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 4D0000170000000000000001 /* marked.min.js */; };
 		4D0000280000000000000001 /* marked-LICENSE.md in Resources */ = {isa = PBXBuildFile; fileRef = 4D0000180000000000000001 /* marked-LICENSE.md */; };
+		4D0000290000000000000001 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 4D0000200000000000000001 /* Localizable.xcstrings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		4D0000170000000000000001 /* marked.min.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = marked.min.js; sourceTree = "<group>"; };
 		4D0000180000000000000001 /* marked-LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "marked-LICENSE.md"; sourceTree = "<group>"; };
 		4D0000190000000000000001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4D0000200000000000000001 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 			children = (
 				4D0000170000000000000001 /* marked.min.js */,
 				4D0000180000000000000001 /* marked-LICENSE.md */,
+				4D0000200000000000000001 /* Localizable.xcstrings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -121,7 +124,12 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				zh_CN,
+				"zh-Hans",
 				en,
+				ja,
+				ko,
+				de,
+				fr,
 				Base,
 			);
 			mainGroup = 4D0000410000000000000001;
@@ -142,6 +150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D0000260000000000000001 /* Assets.xcassets in Resources */,
+				4D0000290000000000000001 /* Localizable.xcstrings in Resources */,
 				4D0000270000000000000001 /* marked.min.js in Resources */,
 				4D0000280000000000000001 /* marked-LICENSE.md in Resources */,
 			);
@@ -290,11 +299,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = R38R5TDP74;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = CloudDreamMarkdown/Info.plist;
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.CloudDream.markdown;
 				PRODUCT_NAME = CloudDreamMarkdown;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -310,11 +319,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = R38R5TDP74;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = CloudDreamMarkdown/Info.plist;
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.CloudDream.markdown;
 				PRODUCT_NAME = CloudDreamMarkdown;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

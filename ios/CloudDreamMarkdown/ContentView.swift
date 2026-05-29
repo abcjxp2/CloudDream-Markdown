@@ -48,7 +48,7 @@ struct ContentView: View {
                 isPresented: $isExporterPresented,
                 document: MarkdownExportDocument(text: document.draft),
                 contentType: .markdown,
-                defaultFilename: document.fileURL?.lastPathComponent ?? "未命名.md"
+                defaultFilename: document.fileURL?.lastPathComponent ?? String(localized: "file.untitled")
             ) { result in
                 switch result {
                 case .success(let url):
@@ -60,17 +60,17 @@ struct ContentView: View {
             .sheet(isPresented: $isSettingsPresented) {
                 NavigationStack {
                     Form {
-                        Picker("外观", selection: $appearanceModeRawValue) {
+                        Picker(String(localized: "settings.appearance"), selection: $appearanceModeRawValue) {
                             ForEach(AppearanceMode.allCases) { mode in
                                 Text(mode.title).tag(mode.rawValue)
                             }
                         }
                     }
-                    .navigationTitle("设置")
+                    .navigationTitle(String(localized: "settings.title"))
                     .navigationBarTitleDisplayMode(.inline)
                     .toolbar {
                         ToolbarItem(placement: .topBarTrailing) {
-                            Button("完成") {
+                            Button(String(localized: "action.done")) {
                                 isSettingsPresented = false
                             }
                         }
@@ -78,11 +78,11 @@ struct ContentView: View {
                 }
                 .presentationDetents([.medium])
             }
-            .alert("打开失败", isPresented: Binding(
+            .alert(String(localized: "error.openFailed"), isPresented: Binding(
                 get: { document.errorMessage != nil },
                 set: { if !$0 { document.errorMessage = nil } }
             )) {
-                Button("确定") {
+                Button(String(localized: "action.ok")) {
                     document.errorMessage = nil
                 }
             } message: {
@@ -110,7 +110,7 @@ struct ContentView: View {
 
     private var topBar: some View {
         HStack(spacing: 12) {
-            Text(document.hasDocument ? document.title : "云梦 Markdown")
+            Text(document.hasDocument ? document.title : "CloudDream Markdown")
                 .font(.system(size: 22, weight: .semibold))
                 .lineLimit(1)
                 .minimumScaleFactor(0.76)
@@ -121,11 +121,11 @@ struct ContentView: View {
                 Button {
                     document.save()
                 } label: {
-                    Text("保存")
-                        .font(.system(size: 15, weight: .semibold))
+                    Image(systemName: "checkmark")
                 }
                 .buttonStyle(.borderedProminent)
                 .disabled(!document.canSave)
+                .accessibilityLabel(String(localized: "action.save"))
 
                 Button {
                     isExporterPresented = true
@@ -133,12 +133,15 @@ struct ContentView: View {
                     Image(systemName: "square.and.arrow.down")
                 }
                 .buttonStyle(.bordered)
-                .accessibilityLabel("另存")
+                .accessibilityLabel(String(localized: "action.saveAs"))
 
-                Button("完成") {
+                Button {
                     document.toggleEditing()
+                } label: {
+                    Image(systemName: "eye")
                 }
-                .font(.system(size: 15, weight: .semibold))
+                .buttonStyle(.bordered)
+                .accessibilityLabel(String(localized: "action.done"))
             } else if document.hasDocument {
                 Button {
                     document.toggleEditing()
@@ -146,7 +149,7 @@ struct ContentView: View {
                     Image(systemName: "pencil")
                 }
                 .buttonStyle(.bordered)
-                .accessibilityLabel("编辑")
+                .accessibilityLabel(String(localized: "action.edit"))
 
                 Button {
                     isImporterPresented = true
@@ -154,7 +157,7 @@ struct ContentView: View {
                     Image(systemName: "folder")
                 }
                 .buttonStyle(.bordered)
-                .accessibilityLabel("打开")
+                .accessibilityLabel(String(localized: "action.open"))
 
                 settingsButton
             } else {
@@ -173,7 +176,7 @@ struct ContentView: View {
             Image(systemName: "gearshape")
         }
         .buttonStyle(.bordered)
-        .accessibilityLabel("设置")
+        .accessibilityLabel(String(localized: "settings.title"))
     }
 
     private var searchField: some View {
@@ -182,10 +185,11 @@ struct ContentView: View {
                 .font(.system(size: 16, weight: .semibold))
                 .foregroundStyle(.secondary)
 
-            TextField("搜索当前文档", text: $document.searchText)
+            TextField("", text: $document.searchText)
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
                 .submitLabel(.search)
+                .accessibilityLabel(String(localized: "search.currentDocument"))
 
             if !document.searchText.isEmpty {
                 Button {
@@ -194,7 +198,7 @@ struct ContentView: View {
                     Image(systemName: "xmark.circle.fill")
                         .foregroundStyle(.secondary)
                 }
-                .accessibilityLabel("清空搜索")
+                .accessibilityLabel(String(localized: "search.clear"))
             }
         }
         .font(.system(size: 16))
@@ -207,29 +211,16 @@ struct ContentView: View {
         VStack(spacing: 22) {
             Spacer()
 
-            Image(systemName: "doc.text.magnifyingglass")
-                .font(.system(size: 56, weight: .regular))
-                .foregroundStyle(.blue)
-                .symbolRenderingMode(.hierarchical)
-
-            VStack(spacing: 8) {
-                Text("打开 Markdown 文件")
-                    .font(.system(size: 26, weight: .semibold))
-
-                Text("阅读、搜索和轻量编辑都在这里完成")
-                    .font(.system(size: 16))
-                    .foregroundStyle(.secondary)
-                    .multilineTextAlignment(.center)
-            }
-
             Button {
                 isImporterPresented = true
             } label: {
-                Label("选择文件", systemImage: "folder")
-                    .font(.system(size: 17, weight: .semibold))
+                Image(systemName: "folder")
+                    .font(.system(size: 38, weight: .regular))
+                    .frame(width: 84, height: 84)
             }
             .buttonStyle(.borderedProminent)
-            .controlSize(.large)
+            .clipShape(Circle())
+            .accessibilityLabel(String(localized: "action.open"))
 
             Spacer()
             Spacer()

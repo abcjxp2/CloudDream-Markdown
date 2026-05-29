@@ -1,0 +1,166 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "action.done" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Fertig" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Done" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Terminé" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "完了" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "완료" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "完成" } }
+      }
+    },
+    "action.edit" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Bearbeiten" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Edit" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Modifier" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "編集" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "편집" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "编辑" } }
+      }
+    },
+    "action.ok" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "OK" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "OK" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "OK" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "OK" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "확인" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "确定" } }
+      }
+    },
+    "action.open" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Öffnen" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Open" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Ouvrir" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "開く" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "열기" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "打开" } }
+      }
+    },
+    "action.save" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Sichern" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Save" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Enregistrer" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "保存" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "저장" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "保存" } }
+      }
+    },
+    "action.saveAs" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Sichern unter" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Save As" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Enregistrer sous" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "別名で保存" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "다른 이름으로 저장" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "另存" } }
+      }
+    },
+    "appearance.dark" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Dunkel" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Dark" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Sombre" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ダーク" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "다크" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "深色" } }
+      }
+    },
+    "appearance.light" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Hell" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Light" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Clair" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ライト" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "라이트" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "浅色" } }
+      }
+    },
+    "appearance.system" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "System" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "System" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Système" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "システム" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "시스템" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "跟随系统" } }
+      }
+    },
+    "error.openFailed" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Öffnen fehlgeschlagen" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Couldn’t Open" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Ouverture impossible" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "開けませんでした" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "열 수 없음" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "打开失败" } }
+      }
+    },
+    "error.unsupportedMarkdown" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Nur Markdown-Dateien werden unterstützt." } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Only Markdown files are supported." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Seuls les fichiers Markdown sont pris en charge." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "Markdown ファイルのみ対応しています。" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "Markdown 파일만 지원됩니다." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "这里只接受 Markdown 文件。" } }
+      }
+    },
+    "file.untitled" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Unbenannt.md" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Untitled.md" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Sans titre.md" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "名称未設定.md" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "제목 없음.md" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "未命名.md" } }
+      }
+    },
+    "search.clear" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Suche löschen" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Clear Search" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Effacer la recherche" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "検索を消去" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "검색 지우기" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "清空搜索" } }
+      }
+    },
+    "search.currentDocument" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Aktuelles Dokument suchen" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Search Current Document" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Rechercher dans le document" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "現在の文書を検索" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "현재 문서 검색" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "搜索当前文档" } }
+      }
+    },
+    "settings.appearance" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Erscheinungsbild" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Appearance" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Apparence" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "外観" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "모양" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "外观" } }
+      }
+    },
+    "settings.title" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Einstellungen" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Settings" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Réglages" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "設定" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "설정" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "设置" } }
+      }
+    }
+  },
+  "version" : "1.0"
+}

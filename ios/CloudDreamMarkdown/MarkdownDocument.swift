@@ -18,7 +18,7 @@ final class MarkdownDocument {
     }
 
     var title: String {
-        fileURL?.lastPathComponent ?? "云梦Markdown"
+        fileURL?.lastPathComponent ?? "CloudDream Markdown"
     }
 
     var canSave: Bool {
@@ -31,7 +31,7 @@ final class MarkdownDocument {
 
     func load(url: URL) {
         guard Self.isSupportedMarkdownURL(url) else {
-            errorMessage = "这里只接受 Markdown 文件。"
+            errorMessage = String(localized: "error.unsupportedMarkdown")
             return
         }
 
